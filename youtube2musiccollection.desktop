@@ -1,0 +1,22 @@
+[Desktop Entry]
+Name=youtube2musiccollection
+Comment=Save Youtube videos as beautifully tagged audio files to your offline or online music collection
+Exec=/home/raphael/Projekte/BASH/youtube2musiccollection/youtube2musiccollection.sh
+Icon=/home/raphael/Projekte/BASH/youtube2musiccollection/icons/logo/logo.png
+Type=Application
+#MimeType=text/html;text/xml;application/xhtml+xml;
+#StartupWMClass=zen
+Categories=Utility;
+StartupNotify=true
+Terminal=false
+#X-MultipleArgs=false
+Keywords=Internet;WWW;Youtube;Music;Navidrome;Subsonic;
+Actions=new-instance;new-instance-cli;
+
+[Desktop Action new-instance]
+Name=Open a New Instance
+Exec=/home/raphael/Projekte/BASH/Youtube\ to\ Navidrome/youtube2musiccollection.sh
+
+[Desktop Action new-instance-cli]
+Name=Open in Terminal (CLI mode)
+Exec=/home/raphael/Projekte/BASH/Youtube\ to\ Navidrome/youtube2musiccollection.sh --help

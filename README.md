@@ -1,4 +1,4 @@
-![](icons/logo/logo.png)
+<img src="icons/logo/logo.png" alt="App-icon" width="600px">App-Icon</img>
 
 # youtube2musiccollection
 

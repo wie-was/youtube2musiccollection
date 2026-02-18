@@ -5,7 +5,7 @@
 Save Youtube videos as beautifully tagged audio files to your offline or online music collection.
 
 ## Use cases
-* Preserve music that you care about to your music collection. We have all experienced Youtube vidoes being taken down
+* Preserve music that you care about to your music collection.
 * Play audio files instead of videos to save bandwidth when on a metered network
 
 ## Description

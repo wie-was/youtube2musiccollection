@@ -1,4 +1,4 @@
-<img src="icons/logo/logo.png" alt="App-icon" width="600px">App-Icon</img>
+<img src="icons/logo/logo.png" alt="App-icon" width="400px"></img>
 
 # youtube2musiccollection
 

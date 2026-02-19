@@ -9,13 +9,13 @@ Save Youtube videos as beautifully tagged audio files to your offline or online 
 * Play audio files instead of videos to save bandwidth when on a metered network
 
 ## Description
+
+This is a Bash script with a graphical user interface powered by [zenity](https://gitlab.gnome.org/GNOME/zenity). Providing at least one argument, such as `--help`, will start the program in command line mode.
+
 youtube2musiccollection downloads and extracts the audio-track from any Youtube-video without format conversion, ie. without quality loss. The resulting audio-track will be encoded in either opus or aac/m4a, according to how the audio track was encoded by Youtube. The program further downloads the video-thumbnail as *cover.webp*, puts both files in a folder by the name of the video-title, edits the metatags of the audio file, moves the folder to a local directory or a remote sever via rsync.
 
 ### Tagging
 The script tries to extract the meta-tags *artist* and *album* from the title of the Youtube-video, by splitting the title-string at a delimiter  "&nbsp;-&nbsp;"  or ":&nbsp;" (the spacing matters). This behaviour can be overruled by manually adding either *Artist*, *Album* or both in the respective dialog.
-
-## Technical description
-This is a Bash script with a graphical user interface powered by [zenity](https://gitlab.gnome.org/GNOME/zenity). Providing at least one argument, such as `--help`, will start the program in command line mode.
 
 ### Dependencies
 Requires yt-dlp, ffmpeg, kid3-cli, jq, wget and rsync to be installed on the system. And requires zenity if you want to use the GUI.

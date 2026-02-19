@@ -38,9 +38,7 @@ TBD
 <img src=".assets/Main-window.png" alt="Main window" width="300px"></img>
 <img src=".assets/Preview-Metatags.png" alt="Preview metatags" width="400px"></img>
 <img src=".assets/Edit-Metatags.png" alt="Edit metatags" width="400px"></img>
-<img src=".assets/Edit-Metatags.png" alt="Edit metatags" width="400px"></img>
-
-### How the resulting audio-file looks in a music player
+### How the resulting audio file looks in a music player
 
 The player in the screenshot is [Aonsoku](https://github.com/victoralvesf/aonsoku)
 

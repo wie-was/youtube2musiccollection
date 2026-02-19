@@ -18,7 +18,7 @@ Run `youtube2musiccollection.sh --help` for more information
 
 ## Description
 
-This is a Bash script with a graphical user interface powered by [zenity](https://gitlab.gnome.org/GNOME/zenity). Providing at least one argument, such as `--help`, will start the program in command line mode.
+This is a Bash script with a graphical user interface powered by [zenity](https://gitlab.gnome.org/GNOME/zenity). Providing at least one argument, such as `--help`, or the absence of zenity on the system, will start the program in command line mode.
 
 youtube2musiccollection downloads and extracts the audio-track from any Youtube-video without format conversion, ie. without quality loss. The resulting audio-track will be encoded in either opus or aac/m4a, according to how the audio track was encoded by Youtube. The program further downloads the video-thumbnail as *cover.webp*, puts both files in a folder by the name of the video-title, edits the metatags of the audio file, moves the folder to a local directory or a remote sever via rsync.
 

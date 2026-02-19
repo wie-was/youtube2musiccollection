@@ -234,10 +234,11 @@ then
     --width=$windowWidth \
     --title="$nameGUI" \
     --text="Enter a Youtube-URL and press ⮠" \
-    --entry-text="https://www.youtube.com/watch?v=yCgZmGwx9VU" \
     --ok-label="OK ⮠" \
     --extra-button="$buttonLabelSetup" \
     --extra-button="$buttonLabelAbout")
+
+    # Dev mode: Insert a URL by defaul: --entry-text="https://www.youtube.com/watch?v=yCgZmGwx9VU" \
 
     # Check the exit status. If "Cancel" has been pressed (ie. the exit status not equals 0 AND there is no zenity-output), exit the program immediately
     if [ $? -ne 0 ] && [[ -z $zenityOutput ]]

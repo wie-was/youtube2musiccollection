@@ -481,6 +481,7 @@ fetchParseDisplayMetadata() {
         # Spawn the info box / welcome popup, to be seen before the form
         zenityDecision=$(zenity --question \
         --width=$windowWidth \
+        --icon="$logo" \
         --title="Preview of metadata and destination location" \
         --text="<b>Artist</b> \t\t$artistDisplayZenity\n<b>Album</b> \t\t$albumDisplayZenity\n<b>Title</b> \t\t$titleDisplayZenity\n<b>Date</b> \t\t$date\n<b>Codec</b> \t\t$acodec\n<b>Comment</b>\t$commentDisplayZenity\n\n<b>Destination</b>\t$destinationFolder" \
         --ok-label="🆗 Computer" \

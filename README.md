@@ -18,7 +18,7 @@ The script tries to extract the meta-tags *artist* and *album* from the title of
 This is a Bash script with a graphical user interface powered by [zenity](https://gitlab.gnome.org/GNOME/zenity). Providing at least one argument, such as `--help`, will start the program in command line mode.
 
 ### Dependencies
-Requires yt-dlp, ffmpeg, kid3-cli, jq, wget and rsync to be installed on the system.
+Requires yt-dlp, ffmpeg, kid3-cli, jq, wget and rsync to be installed on the system. And requires zenity if you want to use the GUI.
 
 ## Installation
 Bli blah.

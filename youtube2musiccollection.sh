@@ -23,10 +23,25 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 ## Global user variables (➔USER CONFIG HERE)
 #
-# Set the destination location (rsync syntax)
-destinationFolder=ppi5.ddns.net:/media/Lacie_R_1TB/Music\ collection/Youtube-Rips/
+# Set the destination location (rsync syntax).
+destinationFolder=""
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
+
+# If no destination location is set manually, try to use the users "downloads" directory
+if [ -z $destinationFolder ]
+then
+    if [ -d $HOME/Downloads ]
+    then
+        destinationFolder=$HOME/Downloads
+    elif [ -d $HOME/downloads ]
+    then
+        destinationFolder=$HOME/downloads
+    else
+        destinationFolder=$HOME
+    fi
+fi
 
 ## Functions definitions
 
@@ -66,10 +81,10 @@ function displayArrays() {
 ## Global program variables
 
 # Set the name of the program
-name="youtube2musiccollection" # yt2nd | yt-adl | yttmc
+name="youtube2musiccollection"
 nameGUI=$name
 # Set the version
-version=0.9
+version=0.5
 # Author
 author="wie-was"
 # Email
@@ -139,7 +154,7 @@ $abstract
 
 $description
 
-<span weight='bold'>Requires $(displayArrays dependencies and)</span> to be installed on the system.
+<span weight='bold'>Requires $(displayArrays dependencies and)</span> to be installed on the system. And requires <b>zenity</b>, if you want to use the GUI.
 
 𝆺 The script tries to extract the meta-tags \<i\>Artist\</i\> and \<i\>Album\</i\> from the title of the Youtube-video, by splitting the title-string \
 at a delimiter \" - \" or \": \" (the spacing matters). This behaviour can be overruled by manually adding either <i>Artist</i>, <i>Album</i> or both.
@@ -191,19 +206,18 @@ do
     fi
 done
 
-## If no arguments are provided, use the zenity GUI mode
-
-if [ $# -eq 0 ]
-then
-    GUIMode=on
-    # Check if zenity is available. If not, redirect the user to the CLI interface somehow
+# Additionally, check if zenity is available. If not, start CLI mode
     which zenity > /dev/null 2>&1
     if [ $? -ne 0 ]
     then 
-        # Do stuff
-        # TODO
-        exit
+        zenityAvailable="false"
     fi
+
+## If no arguments are provided, use the zenity GUI mode
+
+if [ $# -eq 0 ] && [[ $zenityAvailable != "false" ]]
+then
+    GUIMode=on
     # Display error and exit if dependencies are missing
     if [[ ! -z "${missingDependencies[@]}" ]]
     then
@@ -264,10 +278,9 @@ then
         --title="$buttonLabelSetup" \
         --text="Settings not implemented yet...come back soon! In the meantime: Permanently change the destination location in the file <tt>$0</tt> Search for \"USER CONFIG\".\n\nCurrently hardcoded <b>destination location</b>: <tt>$destinationFolder</tt>" \
         --icon="$logo" \
-        --ok-label="Save Settings 🖫"
-
+        --ok-label="OK"
+        # OK Label: "Save Settings 🖫"
         # TODO: Rsync DRY-RUN to check if the destination directory exists and is valid (we *don't* want to create it if it doesn't exist)
-
 
         # Restart program (aka go back to main menu)
         exec "$pathToScript"
@@ -304,7 +317,7 @@ then
         fi
     fi
 
-## Else (if CLI arguments were provided and the zenity GUI not used,) assess the arguments
+## Else (if CLI arguments were provided OR zenity is not available,) assess the arguments
 
 else
     GUIMode=off

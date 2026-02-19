@@ -31,5 +31,20 @@ Requires yt-dlp, ffmpeg, kid3-cli, jq, wget and rsync to be installed on the sys
 ## Installation
 TBD
 
+## Screenshots
+
+### Graphical User Interface
+
+<img src=".assets/Main-window.png" alt="Main window" width="300px"></img>
+<img src=".assets/Preview-Metatags.png" alt="Preview metatags" width="400px"></img>
+<img src=".assets/Edit-Metatags.png" alt="Edit metatags" width="400px"></img>
+<img src=".assets/Edit-Metatags.png" alt="Edit metatags" width="400px"></img>
+
+### How the resulting audio-file looks in a music player
+
+The player in the screenshot is [Aonsoku](https://github.com/victoralvesf/aonsoku)
+
+<img src=".assets/Aonsoku-Darkside.jpg" alt="Aonsoku Screenshot" width="600px"></img>
+
 ## Feedback
 Bug reports, feature requests or feedback of any kind is very welcome!

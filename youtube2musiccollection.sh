@@ -160,7 +160,6 @@ $description
 at a delimiter \" - \" or \": \" (the spacing matters). This behaviour can be overruled by manually adding either <i>Artist</i>, <i>Album</i> or both.
 𝆺 \<i\>Destination\</i\> sets a one-time destination folder, overriding the destination location defined in the Settings.
 
-
 <b>Credits</b>
 
 Copyright © $year $author. Get in touch or contribute:\n\n<u>$github</u>

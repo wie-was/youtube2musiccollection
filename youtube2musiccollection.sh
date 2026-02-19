@@ -514,18 +514,14 @@ fetchParseDisplayMetadata() {
                 # Restart program (aka go back to main menu)
                 exec "$pathToScript"
             else
-                zenity --info --text="$zenityFormOutput"
                 # Harvest the user-input into an array
                 IFS='|' read -ra zenityArguments <<< $zenityFormOutput               
                 # Extract and validate data from the array
-
-                zenity --info --text="$(echo ${zenityArguments[@]}, ${zenityArguments[0]}, ${zenityArguments[1]})"
                 
                 # Only override $artist and $album if the user has entered something
                 if [ -n "${zenityArguments[0]}" ]
                 then
                     artist=${zenityArguments[0]}
-                    zenity --info --text="$artist"
                 fi
                 if [ -n "${zenityArguments[1]}" ]
                 then
@@ -548,8 +544,6 @@ fetchParseDisplayMetadata() {
 }
 
 writeMoveData() {
-
-    zenity --info --text="$artist, $album, $date, $destination"
 
     ## Determine the audio codec
 

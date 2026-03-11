@@ -14,7 +14,7 @@ Run `youtube2musiccollection.sh --help` for more information
 
 ## Use cases
 * Music preservation: Save music that you care about from the ever-changing, fast-paced world of the modern internet to the quiet and calm of your own music collection.
-* Play audio files instead of videos to save bandwidth when on a metered network
+* Stream audio files instead of videos to save bandwidth when playing from a music server on a metered network.
 
 ## Description
 

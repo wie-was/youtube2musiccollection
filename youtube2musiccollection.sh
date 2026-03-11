@@ -24,13 +24,13 @@
 ## Global user variables (➔USER CONFIG HERE)
 #
 # Set the destination location (rsync syntax).
-destinationFolder=""
+destinationFolder=ppi5.ddns.net:/media/Lacie_R_1TB/Music\ collection/Youtube-Rips/
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 
-# If no destination location is set manually, try to use the users "downloads" directory
-if [ -z $destinationFolder ]
+# If no destination location is set manually (couple of lines above), try to use the users "downloads" directory
+if [[ -z $destinationFolder ]]
 then
     if [ -d $HOME/Downloads ]
     then
@@ -499,7 +499,7 @@ fetchParseDisplayMetadata() {
             # Create the form GUI and harvest input into an array
             zenityFormOutput=$(zenity --forms \
             --title="Manually set Metadata or Destination location" \
-            --text="<span weight='light' bgcolor='white'>Only adjust the fields that need adjustment\n\nUse <tt>rsync</tt>-syntax for <i>Destination location</i>, for example\n<tt><span color='darkgrey'>music.server.net:/path/to/music/library/</span></tt> (remote) or\n<tt><span color='darkgrey'>/path/to/music/library/</span></tt> (local)</span>" \
+            --text="<span weight='light' bgcolor='white'>Only adjust the fields that need adjustment. Leave others empty.\n\nUse <tt>rsync</tt>-syntax for <i>Destination location</i>, for example\n<tt><span color='darkgrey'>music.server.net:/path/to/music/library/</span></tt> (remote) or\n<tt><span color='darkgrey'>/path/to/music/library/</span></tt> (local)</span>" \
             --icon="$logo" \
             --width="600" \
             --add-entry="Artist" \

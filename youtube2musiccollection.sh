@@ -426,13 +426,16 @@ fetchParseDisplayMetadata() {
     # Required for the later tagging process. See Shell Parameter Expansion (Manual 3.5.3)
     # Omitted for now
 
+    # Escape single-quotes
+    comment=${comment//"'"/"\'"}
+
     # Escape single-quotes for displaying the metadata in zenity
     #title=${title//"'"/"\'"}
     commentDisplayZenity=${comment//"'"/"\'"}
     #artist=${artist//"'"/"\'"}
     #album=${album//"'"/"\'"}
 
-    # Escape double-quotes
+    # Escape double-quotes for displaying the metadata in zenity
     #title=${title//'"'/'\"'}
     commentDisplayZenity=${commentDisplayZenity//'"'/'\"'}
     #artist=${artist//'"'/'\"'}

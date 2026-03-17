@@ -24,7 +24,7 @@
 ## Global user variables (➔USER CONFIG HERE)
 #
 # Set the destination location (rsync syntax).
-destinationFolder=ppi5.ddns.net:/media/Lacie_R_1TB/Music\ collection/Youtube-Rips/
+destinationFolder=""
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 

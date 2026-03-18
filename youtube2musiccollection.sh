@@ -24,7 +24,7 @@
 ## Global user variables (➔USER CONFIG HERE)
 #
 # Set the destination location (rsync syntax).
-destinationFolder=""
+destinationFolder=ppi5.ddns.net:/media/Lacie_R_1TB/Music-collection/Youtube-Rips/
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
@@ -394,14 +394,14 @@ fetchParseDisplayMetadata() {
     }
     # Check the $title string for delimiters
     delimiterSearch
-    if [ -z $artist ]
+    if [[ -z $artist ]]
     then
         # See Shell Parameter Expansion (Manual 3.5.3), "pattern removal"
         artist=${title%$delimiter*}
     fi
     # Check the $title string for delimiters
     delimiterSearch
-    if [ -z $album ]
+    if [[ -z $album ]]
     then
         # See Shell Parameter Expansion (Manual 3.5.3), "pattern removal"
         album=${title#*$delimiter}
@@ -418,9 +418,11 @@ fetchParseDisplayMetadata() {
     ## Escaping: We need to escape various strings for various purposes
 
     # Remove forward slashes from $title for file and folder creation
-    fileFolderTitle="${title//\//}"
+    fileFolderTitle=${title//\//-}
+    # Remove colons from $title for file and folder creation
+    fileFolderTitle=${fileFolderTitle//:/.}
     # Remove leading dots from $title for file and folder creation
-    fileFolderTitle="${title/#./}"
+    fileFolderTitle=${fileFolderTitle/#./}
 
     # Escape single-quotes and double-quotes in the strings $title, $comment, $artist, $album.
     # Required for the later tagging process. See Shell Parameter Expansion (Manual 3.5.3)

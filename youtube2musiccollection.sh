@@ -504,7 +504,7 @@ fetchParseDisplayMetadata() {
             # Create the form GUI and harvest input into an array
             zenityFormOutput=$(zenity --forms \
             --title="Manually set Metadata or Destination location" \
-            --text="<span weight='light' bgcolor='white'>Only adjust the fields that need adjustment. Leave others empty.\n\nUse <tt>rsync</tt>-syntax for <i>Destination location</i>, for example\n<tt><span color='darkgrey'>music.server.net:/path/to/music/library/</span></tt> (remote) or\n<tt><span color='darkgrey'>/path/to/music/library/</span></tt> (local)</span>" \
+            --text="<span weight='light'>Only adjust the fields that need adjustment. Leave others empty.\n\nUse <tt>rsync</tt>-syntax for <i>Destination location</i>.\nRemote example: <tt><span color='darkgrey'>music.server.net:/path/to/music/library/</span></tt>\nLocal example: <tt><span color='darkgrey'>/path/to/music/library/</span></tt></span>" \
             --icon="$logo" \
             --width="600" \
             --add-entry="Artist" \

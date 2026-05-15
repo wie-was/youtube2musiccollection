@@ -112,7 +112,7 @@ buttonLabelSetup="Settings ⚙"
 # "About" button text
 buttonLabelAbout="About 🛈"
 # "License" button text
-buttonLabelLicense="License ©"
+buttonLabelLicense="License Information ©"
 
 # Comment / Abstract
 abstract="Save Youtube videos as beautifully tagged audio files to your offline or online music collection."
@@ -123,10 +123,11 @@ This is a Bash script with a graphical user interface powered by zenity. \
 Providing at least one argument, \
 such as <tt>--help</tt>, will start the program in command line mode.
 
-<i>$nameGUI</i> downloads and extracts the audio-track from any Youtube-video without format conversion, \
-ie. without quality loss. The resulting audio-track will be in the format of either opus or aac/m4a, according to how it was encoded by Youtube in the first place. \
+$nameGUI downloads and extracts the audio-track from any Youtube-video without format conversion, \
+that is, without quality loss. The resulting audio-track will be in the format of either <tt>opus</tt> or <tt>aac/m4a</tt>, according to how it was encoded by Youtube in the first place. \
 The program further downloads the video-thumbnail as <i>cover.webp</i>, puts both files in a folder by the name of the video-title, \
-edits the metatags of the audio file and finally moves the folder to a local or remote directory via rsync (SSH public key authentication)."
+edits the metatags of the audio file and finally moves the folder to a local or remote directory of choice via rsync. \
+For remote directories, SSH public key authentication is being used."
 
 # Help text
 helpText="$(repeatCharacter "# " 22)\n# Welcome to $name! 💿  #\n$(repeatCharacter "# " 22)\n
@@ -154,19 +155,16 @@ $abstract
 
 $description
 
-<span weight='bold'>Requires $(displayArrays dependencies and)</span> to be installed on the system. And requires <b>zenity</b>, if you want to use the GUI.
+<span weight='bold'>Requires</span> $(displayArrays dependencies and) to be installed on the system. And requires zenity, if you want to use the GUI.
 
-𝆺 The script tries to extract the meta-tags \<i\>Artist\</i\> and \<i\>Album\</i\> from the title of the Youtube-video, by splitting the title-string \
-at a delimiter \" - \" or \": \" (the spacing matters). This behaviour can be overruled by manually adding either <i>Artist</i>, <i>Album</i> or both.
-𝆺 \<i\>Destination\</i\> sets a one-time destination folder, overriding the destination location defined in the Settings.
+<b>How the tagging works:</b>
+𝆺 The script tries to extract the metatags \<i\>Artist\</i\> and \<i\>Album\</i\> from the title of the Youtube-video, by splitting the title \
+at a delimiter \" - \" or \": \" (the spacing matters). 
+𝆺 These automatic tags can be manually overridden in the dialog <i>Manually set Metadata &amp; Destination Location</i>.
 
 <b>Credits</b>
 
-Copyright © $year $author. Get in touch or contribute:\n\n<u>$github</u>
-
-<small>This program comes with ABSOLUTELY NO WARRANTY; for details press $buttonLabelLicense.
-This is free software, and you are welcome to redistribute it
-under certain conditions; press $buttonLabelLicense for details.</small>
+Copyright © $year $author. Get in touch or contribute:\n<u>$github</u>
 "
 
 ## Error texts both CLI and zenity GUI
@@ -254,14 +252,16 @@ then
             --title="$buttonLabelAbout" \
             --text="$zenityIntroText" \
             --icon="$logo" \
-            --width=600 \
-            --ok-label="🢦 Back to Main Menu" \
+            --width=$(( 2 * $windowWidth )) \
+            --ok-label="OK" \
             --extra-button="$buttonLabelLicense"
             # Spawn the License page
             if [ $? -ne 0 ]
             then
                 zenity --text-info \
                 --title="$buttonLabelLicense" \
+                --width=$(( 2 * $windowWidth )) \
+                --height=$(( 2 * $windowWidth )) \
                 --filename="$(dirname $0)/LICENSE.md"
             else
                 break
@@ -276,6 +276,7 @@ then
     then
         zenity --info \
         --title="$buttonLabelSetup" \
+        --width=$(( 1 * $windowWidth )) \
         --text="Settings not implemented yet...come back soon! In the meantime: Permanently change the destination location in the file <tt>$0</tt> Search for \"USER CONFIG\".\n\nCurrently hardcoded <b>destination location</b>: <tt>$destinationFolder</tt>" \
         --icon="$logo" \
         --ok-label="OK"
@@ -291,7 +292,7 @@ then
         if [[ -z $zenityOutput ]]
         then
             zenity --error \
-            --title="No URL provided" \
+            --title="No URL Provided" \
             --width="$windowWidth" \
             --text="Enter a Youtube-URL, eg. \n\n<i>https://www.youtube.com/watch?v=sCYzXDYN_vk</i>\n\nand try again" \
             --no-wrap
@@ -309,7 +310,7 @@ then
 
         else
             zenity --error \
-            --title="URL not valid" \
+            --title="URL Not Valid" \
             --text="The provided URL does not seem to be a valid Youtube-URL" \
             --no-wrap
             # Restart program (aka go back to main menu)
@@ -357,7 +358,7 @@ fetchParseDisplayMetadata() {
         if [[ $GUIMode == "on" ]]
         then
             zenity --error \
-            --title="Something went wrong" \
+            --title="Something Went Wrong" \
             --width="$windowWidth" \
             --text="$errorTextNetwork\n\nyt-dlp reports:\n\n<tt>$metadata</tt>"
             # Restart program (aka go back to main menu)
@@ -496,10 +497,10 @@ fetchParseDisplayMetadata() {
         zenityDecision=$(zenity --question \
         --width=$(( 2 * $windowWidth )) \
         --icon="$logo" \
-        --title="Preview of metadata and destination location" \
+        --title="Preview of Metadata and Destination Location" \
         --text="<b>Artist</b> \t\t$artistDisplayZenity\n<b>Album</b> \t\t$albumDisplayZenity\n<b>Title</b> \t\t$titleDisplayZenity\n<b>Date</b> \t\t$date\n<b>Codec</b> \t\t$acodec\n<b>Comment</b>\t$commentDisplayZenity\n\n<b>Destination</b>\t$destinationFolder" \
-        --ok-label="🆗 Computer" \
-        --cancel-label="Manually set Metadata or Destination location")
+        --ok-label="OK" \
+        --cancel-label="Manually set Metadata & Destination Location")
         #--ellipsize)
         # --no-wrap)
 
@@ -513,7 +514,7 @@ fetchParseDisplayMetadata() {
         else
             # Create the form GUI and harvest input into an array
             zenityFormOutput=$(zenity --forms \
-            --title="Manually set Metadata or Destination location" \
+            --title="Manually Set Metadata & Destination Location" \
             --text="<span weight='light'>Only adjust the fields that need adjustment. Leave others empty.\n\nUse <tt>rsync</tt>-syntax for <i>Destination location</i>.\nRemote example: <tt><span color='darkgrey'>music.server.net:/path/to/music/library/</span></tt>\nLocal example: <tt><span color='darkgrey'>/path/to/music/library/</span></tt></span>" \
             --icon="$logo" \
             --width="600" \
@@ -575,7 +576,7 @@ writeMoveData() {
         then
             displayCodecNow=$(displayArrays supportedAudioCodecs or)
             zenity --error \
-            --title="Unknown audio codec" \
+            --title="Unknown Audio Codec" \
             --width="$windowWidth" \
             --text="The codec of the audio stream of \"$youtubeUrl\" is not $displayCodecNow. Please inspect manually." \
             --no-wrap
@@ -600,7 +601,7 @@ writeMoveData() {
         if [[ $GUIMode == "on" ]]
         then
             zenity --error \
-            --title="Something went wrong" \
+            --title="Something Went Wrong" \
             --width="$windowWidth" \
             --text="$errorTextDownload"
             # Restart program (aka go back to main menu)
@@ -617,7 +618,7 @@ writeMoveData() {
         if [[ $GUIMode == "on" ]]
         then
             zenity --error \
-            --title="Something went wrong" \
+            --title="Something Went Wrong" \
             --width="$windowWidth" \
             --text="$errorTextNetwork\n\nyt-dlp reports:\n\n<tt>$metadata</tt>"
             # Restart program (aka go back to main menu)
@@ -672,7 +673,7 @@ writeMoveData() {
                     if [[ $GUIMode == "on" ]]
                     then
                         zenity --error \
-                        --title="Transfer failed" \
+                        --title="Transfer Failed" \
                         --text="The transfer to the destination directory <tt>$destination</tt> failed.\nIt seems that the destination directory does not exist." \
                         --width="$windowWidth" 
                         exit 1
@@ -695,7 +696,7 @@ writeMoveData() {
                 if [[ $GUIMode == "on" ]]
                 then
                     zenity --error \
-                    --title="Transfer failed" \
+                    --title="Transfer Failed" \
                     --text="The transfer to the destination directory <tt>$destinationFolder</tt> failed.\nPlease check if the destination is available." \
                     --width="$windowWidth"
                     exit 1
@@ -720,7 +721,7 @@ writeMoveData() {
             --title="" \
             --text="$exitMessageGUINow" \
             --width="$windowWidth" \
-            --extra-button="Open Destination folder"
+            --extra-button="Open Destination Folder"
             # If extra button has been clicked
             if [ $? -ne 0 ]
             then
@@ -742,7 +743,7 @@ then
     # Fake call just for the sake of having a nice progress bar :D
     /usr/bin/yt-dlp --skip-download --print-json --no-warnings --socket-timeout 5.5 "$url" 2>&1 | zenity --progress \
     --width="$windowWidth" \
-    --title="Fetching metadata" \
+    --title="Fetching Metadata" \
     --text="This may take a few of seconds..." \
     --pulsate \
     --auto-close \
@@ -751,7 +752,7 @@ then
     
     writeMoveData | zenity --progress \
     --width="$windowWidth" \
-    --title="Fetching and processing data" \
+    --title="Fetching and Processing Data" \
     --text="This may take a few of seconds..." \
     --percentage=5 \
     --auto-close \

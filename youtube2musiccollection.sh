@@ -415,6 +415,15 @@ fetchParseDisplayMetadata() {
     # Add the source video-URL to the comment section
     comment=$(echo -e "$comment\n\nVideo version: $youtubeUrl")
 
+    # Restricting length of comment if it exceeds x characters (the amount is just a best guess),
+    # so that the buttons of the zenity window shall always be visible on screen.
+    commentCharacterCount=$(echo -e $comment | wc -c)
+    if [ $commentCharacterCount -gt 750 ]
+    then
+        comment=${comment:0:750}
+        comment=$(echo -e "$comment...\n\n[...]")
+    fi
+
     ## Escaping: We need to escape various strings for various purposes
 
     # Remove forward slashes from $title for file and folder creation
@@ -485,13 +494,14 @@ fetchParseDisplayMetadata() {
     then
         # Spawn the info box / welcome popup, to be seen before the form
         zenityDecision=$(zenity --question \
-        --width=$windowWidth \
+        --width=$(( 2 * $windowWidth )) \
         --icon="$logo" \
         --title="Preview of metadata and destination location" \
         --text="<b>Artist</b> \t\t$artistDisplayZenity\n<b>Album</b> \t\t$albumDisplayZenity\n<b>Title</b> \t\t$titleDisplayZenity\n<b>Date</b> \t\t$date\n<b>Codec</b> \t\t$acodec\n<b>Comment</b>\t$commentDisplayZenity\n\n<b>Destination</b>\t$destinationFolder" \
         --ok-label="🆗 Computer" \
-        --cancel-label="Manually set Metadata or Destination location" \
-        --no-wrap)
+        --cancel-label="Manually set Metadata or Destination location")
+        #--ellipsize)
+        # --no-wrap)
 
         # FEATURE: Add back the "Folder display to the --text string above, like so: \n<b>Folder</b> \t$fileFolderTitle"
 

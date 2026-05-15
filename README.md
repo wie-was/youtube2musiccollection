@@ -6,7 +6,7 @@ Save Youtube videos as beautifully tagged audio files to your offline or online 
 
 ## Usage
 
-### Graphical User Interface
+### Graphical User Interface (requires zenity)
 Simply run *youtube2musiccollection.sh*, or use the *youtube2musiccollection.desktop* file (exec paths need to be manually adapted first)
 ### CLI
 Synopsis: `youtube2musiccollection.sh <YouTube‑URL> [options]`  

@@ -28,9 +28,6 @@ The script tries to extract the meta-tags *artist* and *album* from the title of
 ### Dependencies
 Requires yt-dlp, ffmpeg, kid3-cli, jq, wget and rsync to be installed on the system. And requires zenity if you want to use the GUI.
 
-## Installation
-TBD
-
 ## Screenshots
 
 ### Graphical User Interface

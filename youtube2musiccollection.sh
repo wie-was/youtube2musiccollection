@@ -277,7 +277,7 @@ then
         zenity --info \
         --title="$buttonLabelSetup" \
         --width=$(( 1 * $windowWidth )) \
-        --text="Settings not implemented yet...come back soon! In the meantime: Permanently change the destination location in the file <tt>$0</tt> Search for \"USER CONFIG\".\n\nCurrent <b>destination location</b>: <tt>$destinationFolder</tt>" \
+        --text="Settings not implemented yet...come back soon! In the meantime: Permanently change the destination location in the file $0 \nSearch for \"USER CONFIG\".\n\nCurrent destination location: <tt>$destinationFolder</tt>" \
         --icon="$logo" \
         --ok-label="OK"
         # OK Label: "Save Settings 🖫"

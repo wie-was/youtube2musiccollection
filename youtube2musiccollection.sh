@@ -311,7 +311,7 @@ then
         else
             zenity --error \
             --title="URL Not Valid" \
-            --text="The provided URL does not seem to be a valid Youtube-URL" \
+            --text="The provided input does not seem to be a valid Youtube-URL" \
             --no-wrap
             # Restart program (aka go back to main menu)
             exec "$pathToScript"

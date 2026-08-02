@@ -342,6 +342,15 @@ else
             *) echo -e $errorText; exit
         esac
     done
+
+    ## Playlist feature exploration
+    ##if [[ $url =~ .*playlist\?* ]]
+    ##then
+    ##    playlistUrl=$url
+    ##fi
+
+    ##echo "$playlistUrl"
+    ##exit
 fi
 
 ## Wrapping parts of the script into functions, to "feed" the zenity progress bar
@@ -416,15 +425,6 @@ fetchParseDisplayMetadata() {
     # Add the source video-URL to the comment section
     comment=$(echo -e "$comment\n\nVideo version: $youtubeUrl")
 
-    # Restricting length of comment if it exceeds x characters (the amount is just a best guess),
-    # so that the buttons of the zenity window shall always be visible on screen.
-    commentCharacterCount=$(echo -e $comment | wc -c)
-    if [ $commentCharacterCount -gt 750 ]
-    then
-        comment=${comment:0:750}
-        comment=$(echo -e "$comment...\n\n[...]")
-    fi
-
     ## Escaping: We need to escape various strings for various purposes
 
     # Remove forward slashes from $title for file and folder creation
@@ -458,6 +458,15 @@ fetchParseDisplayMetadata() {
     artistDisplayZenity=${artist//'&'/'&amp;'}
     albumDisplayZenity=${album//'&'/'&amp;'}
     titleDisplayZenity=${title//'&'/'&amp;'}
+
+    # Restricting length of comment if it exceeds x characters (the amount is just a best guess),
+    # so that the buttons of the zenity window shall always be visible on screen.
+    commentCharacterCount=$(echo -e $commentDisplayZenity | wc -c)
+    if [ $commentCharacterCount -gt 750 ]
+    then
+        commentDisplayZenity=${commentDisplayZenity:0:750}
+        commentDisplayZenity=$(echo -e "$commentDisplayZenity...\n\n[...]")
+    fi
 
     ## Create a new folder for the files to be downloaded in
 

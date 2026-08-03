@@ -137,6 +137,7 @@ Dependencies: $(IFS=' '; echo -n ${dependencies[@]}) \n\n\
 Arguments: \n\n\
 --artist=\"Artist Name\"
 --album=\"Album Name\"
+--title=\"Track title\"
 --no-transfer (→ Keeps the files in the temporary download folder ($downloadFolder) on the local machine)
 --destination=\"Destination directory\" (→ local or remote directory (rsync-syntax))
 --help: Display this help text
@@ -335,6 +336,7 @@ else
             *youtube.com*) url=$(echo $argument);;
             --artist*) artist=$(echo $argument | /usr/bin/grep -oP '(?<=\=).*');;
             --album*) album=$(echo $argument | /usr/bin/grep -oP '(?<=\=).*');;
+            --title*) trackTitle=$(echo $argument | /usr/bin/grep -oP '(?<=\=).*');;
             --no-transfer*) noTransfer=1;;
             --destination*) destination=$(echo $argument | /usr/bin/grep -oP '(?<=\=).*');;
             --help) echo -e "$helpText"; exit;;
@@ -387,7 +389,7 @@ fetchParseDisplayMetadata() {
     youtubeUrl=$(echo "$metadata" | jq -r '.webpage_url')
     thumbnailUrl=$(echo "$metadata" | jq -r '.thumbnail')
 
-    ## Extract artist name and album name from title, only if $artist and $album strings are empty (zero). Only works with " - " delimiter currently
+    ## Extract artist name and album name from title, only if $artist and $album strings are empty (zero, `-z`). Only works with " - " delimiter currently
 
     # Function to check the $title string for delimiters
     delimiterSearch()
@@ -483,6 +485,13 @@ fetchParseDisplayMetadata() {
     fi
     cd "$fileFolderTitle"
 
+    ## If $trackTitle is non-zero (`-n`), then finally override $title with it
+
+    if [[ -n $trackTitle ]]
+    then
+        title=$trackTitle
+    fi
+
     ## Show what we captured and processed, for debugging purposes
 
     printf 'Title        : %s\n' "$title"
@@ -529,6 +538,7 @@ fetchParseDisplayMetadata() {
             --width="600" \
             --add-entry="Artist" \
             --add-entry="Album" \
+            --add-entry="Title" \
             --add-calendar="Date" \
             --forms-date-format=%Y-%m-%d \
             --add-entry="Destination location")
@@ -543,7 +553,7 @@ fetchParseDisplayMetadata() {
                 IFS='|' read -ra zenityArguments <<< $zenityFormOutput               
                 # Extract and validate data from the array
                 
-                # Only override $artist and $album if the user has entered something
+                # Only override $artist and $album and $title if the user has entered something
                 if [ -n "${zenityArguments[0]}" ]
                 then
                     artist=${zenityArguments[0]}
@@ -552,13 +562,17 @@ fetchParseDisplayMetadata() {
                 then
                     album=${zenityArguments[1]}
                 fi
+                if [ -n "${zenityArguments[2]}" ]
+                then
+                    title=${zenityArguments[2]}
+                fi
                 # Only override $date when it's not today's date. This is a limitation in zenity: There is always output of the calendar form.
                 # In other words: Setting the current day as a date is not possible.
-                if [ -n ${zenityArguments[2]} ] && [ ${zenityArguments[2]} != $(date +%Y-%m-%d) ]
+                if [ -n ${zenityArguments[3]} ] && [ ${zenityArguments[3]} != $(date +%Y-%m-%d) ]
                 then
-                    date=${zenityArguments[2]}
+                    date=${zenityArguments[3]}
                 fi
-                destination=${zenityArguments[3]}
+                destination=${zenityArguments[4]}
             fi
 
         fi    
